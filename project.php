@@ -33,7 +33,7 @@ Project Title: <INPUT type=\"text\" name=\"projectName\"> <BR>
 		
 		$project_result = mysql_query($project_query);
 		while ($row = mysql_fetch_assoc($project_result)){
-			echo '<div><a href=projectDetails.php?projectName='.$row['Id'].'>'.$row['Title'].''.'</a>';
+			echo '<div><a href=projectDetails.php?projectName='.$row['Id'].'>'.$row['Title'].''.'</a></div>';
 			
 		}
 
