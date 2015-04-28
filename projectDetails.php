@@ -47,7 +47,7 @@ Filename: <INPUT type=\"text\" name=\"filename\"> <BR>
 
 		while ($row = mysql_fetch_assoc($project_result)){
 			echo '<div><a href=documentDetails.php?projId='.$row['DocId'].'>'.$row['Filename'].''.'</a>';
-			echo 'Version: '.$row['versionNo'].'</div>';
+			
 		}
 
 		
