@@ -89,7 +89,55 @@ if (isset($_SESSION['valid_user'])) {
 		while ($row = mysql_fetch_assoc($project_result)){
 			echo '<div><a href=documentDetails.php?docId='.$row['DocId'].'>Version: '.$row['versionNo'].''.'</a>';
 		}
-
 		
+
+		if (isset($_SESSION['valid_user']))
+
+			$docId = $_GET['docId'];	
+			$document_query = "select * from Document where docId = $docId";
+			$documents = mysql_query($document_query);
+			$doc = mysql_fetch_assoc($documents);
+			echo '<h4>Add Comment</h4>';
+			echo("<FORM name=\"comment\" method=\"POST\" action=\"documentDetails.php?docId=$docId\">
+			Comment: <textarea type=\"text\" name=\"commentText\" cols =\"40\" rows=\"5\"></textarea><BR>
+			<INPUT type=\"hidden\" value=\"$docId\" name=\"docId\">
+			<INPUT type= \"submit\" name=\"commentsubmit\" value=\"Add Comment\" > </FORM>"						
+		);
+
+		if(isset($_POST['commentsubmit'])) {
+			$user = $_SESSION['valid_user'];
+
+			$docId = $_POST['docId'];
+			$document_query = "select * from Document where docId = $docId";
+
+			$documents = mysql_query($document_query);
+			$doc = mysql_fetch_assoc($documents);
+			$commentText = $_POST['commentText'];
+			$query = "insert into Comment (CommenterId, DocId, Message)
+			values('$user', $docId, '$commentText')";
+			$result = mysql_query($query) or die("Query failed: " . mysql_error());		
+		}
+
+		echo '<h4>Comments</h4>';
+		if (isset($_SESSION['valid_user']))
+		{
+			$user = $_SESSION['valid_user'];
+
+			$docId = $_GET['docId'];
+
+			//echo $docId;
+		
+			$comment_query = "select Message from Comment where DocId = $docId";		
+
+			$result = mysql_query($comment_query) or die("Query failed: " . mysql_error());
+
+    		while ($row = mysql_fetch_assoc($result)) {
+				echo '<div>'.$row['Message'].'</div>';
+			}
+
+		}
+
+
+
 		mysql_close($connection);
 }

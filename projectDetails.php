@@ -14,7 +14,7 @@ $projId = $_GET['projectName'];
 	echo '<a href="project.php">Projects</a><br><br>';
 
 echo '<h4>Request Collaborators</h4>';
-echo("<div><FORM name=\"collabRequestForm\" method=\"POST\" action=\"collab.php\">
+echo("<div><FORM name=\"collabRequestForm\" method=\"POST\" action=\"projectDetails.php?projectName=$projId\">
 		UserName: <INPUT type=\"text\" name=\"user\" required> <BR>
 		<INPUT type= \"submit\" name=\"btnCollabSubmit\" value=\"Request\" required>
 		<INPUT type=\"hidden\" value=\"$projId\" name=\"projId\">	   
@@ -55,14 +55,16 @@ Filename: <INPUT type=\"text\" name=\"filename\"> <BR>
 		$user = $_SESSION['valid_user'];
 		$collabRequestUser = $_POST['user'];
 		$projectId = $projectId = $_POST['projId'];
-		$collabExistCheckQuery = "select * from Invitation where collaboratorId = $collabRequestUser";
+		$collabExistCheckQuery = "select * from Invitation where collaboratorId = '$collabRequestUser'";
 		$collabResult = mysql_query($collabExistCheckQuery);
 		if($collabResult != False and mysql_num_rows($collabResult)==0) {
 		$projectId = $_POST['projId'];
-			$createCollabQuery = "insert into Invitation ProjId (ProjId, OwnerName, collaboratorId, status)
-				($projectId, $user, $collabRequestUser, 0)";
+			$createCollabQuery = "insert into Invitation (ProjId, OwnerName, collaboratorId, status)
+				values ($projectId, '$user', '$collabRequestUser', 0)";
+			mysql_query($createCollabQuery);
+			echo "<div>Request Sent Successfully</div>";
 		} else {
-			echo "<div>You have already requested that user to work on this project</div>"
+			echo "<div>You have already requested that user to work on this project</div>";
 		}
 	}
 	   
