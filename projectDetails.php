@@ -13,6 +13,16 @@ $projId = $_GET['projectName'];
     echo '<a href="edit.php">Edit Profile</a><br>';
 	echo '<a href="project.php">Projects</a><br><br>';
 
+    $user = $_SESSION['valid_user'];
+    $owner_query = "select OwnerName from Project where Id = $projectId";
+    $owner = mysql_query($owner_query);
+    $owner_name = mysql_fetch_assoc($owner);
+    if($user == $owner_name['OwnerName']) {
+        echo("<div><FORM name=\"deleteProjecttForm\" method=\"POST\" action=\"projectDetails.php?projectName=$projId\">
+                            <INPUT type= \"submit\" name=\"deleteProjSubmit\" value=\"Delete Project\" required>
+                                    <INPUT type=\"hidden\" value=\"$projId\" name=\"projId\">      
+                                            </FORM></div>");
+    }
 echo '<h4>Request Collaborators</h4>';
 echo("<div><FORM name=\"collabRequestForm\" method=\"POST\" action=\"projectDetails.php?projectName=$projId\">
 		UserName: <INPUT type=\"text\" name=\"user\" required> <BR>
