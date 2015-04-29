@@ -29,10 +29,16 @@ if (isset($_SESSION['valid_user'])) {
 	<INPUT type= \"submit\" name=\"btnSubmit\" value=\"Edit Document\" > </FORM>"
 );
 
-	
 
 
 
+	if (isset($_POST['btnDelete'])){
+		$toDelete = $_GET['docId'];
+		$query = "delete from Document where DocId = $toDelete";
+		echo $query;
+		mysql_query($query);
+		echo '<script> window.location ="projectDetails.php?projectName='.$projectId.'"</script>';
+	}
 	if (isset($_POST['btnSubmit'])){
 		$user = $_SESSION['valid_user'];
 
@@ -138,6 +144,14 @@ if (isset($_SESSION['valid_user'])) {
 		}
 
 
-
+	$checkIfOwnerQuery = "select * from Project where Id = $projectId";
+	$row = mysql_fetch_assoc(mysql_query($checkIfOwnerQuery));
+	
+	if($row['OwnerName'] == $user){
+		echo("<FORM name=\"deleteDocument\" method=\"POST\" action=\"documentDetails.php?docId=$docId\">
+		
+		<INPUT type=\"hidden\" value=\"$docId\" name=\"docId\">
+		<INPUT type= \"submit\" name=\"btnDelete\" value=\"Delete Document\" > </FORM>");
+		}
 		mysql_close($connection);
 }

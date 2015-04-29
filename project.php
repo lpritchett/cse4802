@@ -8,6 +8,8 @@ if (isset($_SESSION['valid_user'])) {
 echo("<FORM name=\"createProject\" method=\"POST\" action=\"project.php\">
 Project Title: <INPUT type=\"text\" name=\"projectName\"> <BR>
 <INPUT type= \"submit\" name=\"btnSubmit\" value=\"Create Project\" > </FORM>"
+
+
 );
 	$connection = mysql_connect("mysql-user.cse.msu.edu", "soullie7", "Jeff74094") or die("Could not connect: " . mysql_error());
 	//mysql_select_db("soullie7");
@@ -27,12 +29,26 @@ Project Title: <INPUT type=\"text\" name=\"projectName\"> <BR>
 
 
 
-		echo "here";
+		echo "<h4>Owned Projects";
 		$user = $_SESSION['valid_user'];
 		$project_query = "select * from Project where OwnerName = '$user'";
 		
 		$project_result = mysql_query($project_query);
 		while ($row = mysql_fetch_assoc($project_result)){
+			
+			echo '<div><a href=projectDetails.php?projectName='.$row['Id'].'>'.$row['Title'].''.'</a></div>';
+			
+		}
+		
+		echo "<h4>Collaborative Projects";
+		$user = $_SESSION['valid_user'];
+		$project_query = "select * from Invitation where collaboratorId = '$user' and status = 1";
+		$project_result = mysql_query($project_query);
+		$row = mysql_fetch_assoc($project_result);
+		$projId = $row['ProjId'];
+		$project_query = "select * from Project where Id = $projId";
+		$project_result = mysql_query($project_query);
+		while ($project_result != 0 and $row = mysql_fetch_assoc($project_result)){
 			
 			echo '<div><a href=projectDetails.php?projectName='.$row['Id'].'>'.$row['Title'].''.'</a></div>';
 			

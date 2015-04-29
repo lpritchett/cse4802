@@ -106,8 +106,7 @@ mysql_select_db("soullie7");
 	}
 	
 	echo "<h2>Collaboration Requests</h2>";
-	$collabQuery = "select * from Invitation where collaboratorId = '$user'";
-	
+	$collabQuery = "select * from Invitation where collaboratorId = '$user' and status = 0";
 	$collabResult = mysql_query($collabQuery);
 	while ($row = mysql_fetch_assoc($collabResult)) {
 		$projId = $row['ProjId'];
