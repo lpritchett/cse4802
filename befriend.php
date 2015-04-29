@@ -107,14 +107,15 @@ mysql_select_db("soullie7");
 	
 	echo "<h2>Collaboration Requests</h2>";
 	$collabQuery = "select * from Invitation where collaboratorId = '$user'";
-	echo $collabQuery;
 	
 	$collabResult = mysql_query($collabQuery);
 	while ($row = mysql_fetch_assoc($collabResult)) {
 		$projId = $row['ProjId'];
 		$projectNameQuery = "select * from Project where Id = $projId";
-		$projectName = mysql_query($projectQuery)['Title'];
-		echo '<div><a href=projectDetails.php?projectName='.$row['ProjId'].'>'.$projectName.''.'</a></div>';
+		$projectName = mysql_fetch_assoc(mysql_query($projectNameQuery))['Title'];
+		echo '<div>'.$projectName.'&nbsp';
+		echo '<a href=collab.php?projId='.$row['ProjId'].'&accept=1>Accept</a>&nbsp';
+		echo '<a href=collab.php?projId='.$row['ProjId'].'&accept=0>Deny</a></div>&nbsp';
 	}
 
 mysql_free_result($result);

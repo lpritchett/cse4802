@@ -69,16 +69,13 @@ Filename: <INPUT type=\"text\" name=\"filename\"> <BR>
 	}
 	   
 
-		
-
-
+	
 		$user = $_SESSION['valid_user'];
 		$project_query = "select * from Document where ProjId = $projId";
 		$project_result = mysql_query($project_query);
 		echo '<h4>All Documents and Versions</h4>';
 		while ($row = mysql_fetch_assoc($project_result)){
 			echo '<div><a href=documentDetails.php?docId='.$row['DocId'].'>'.$row['Filename'].' Version: '.$row['versionNo'].'</a>';
-			
 		}
 
 		
