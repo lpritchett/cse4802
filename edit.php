@@ -1,5 +1,12 @@
 <?session_start()?>
-</HEAD>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Login</title>
+	<link href="reset.css" type="text/css" rel=stylesheet>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+</head>
 <BODY>
 <H2>Edit Profile</H2>
 <a href="befriend.php">Friends Page</a>
@@ -24,20 +31,26 @@ if (!isset($_POST['btnSubmit'])&&isset($_SESSION['valid_user'])) { // if page ha
         $birthyear = $row["birthyear"];
 	$interests = $row["interests"];
         $privacy = $row["privacy"];
+        echo("<FORM name=\"UpdateForm\" method=\"POST\" action=\"edit.php\">
+        Password: <INPUT value=\"$password\" pattern=\".{8,}\" title=\"8 char minimum\" type=\"password\" name=\"password\" required> <BR>
+        Hometown City: <INPUT value=\"$home_city\" type=\"text\" name=\"city\" required><BR>
+        Hometown State: <INPUT value=\"$home_state\" type=\"text\" name=\"state\" required><BR>
+        Interest: <INPUT value=\"$interests\" type=\"text\" name=\"interests\" required><BR>
+        <select name=\"privacy\">"
         );
-        if($privacy = "High")
+        if($privacy == "High")
         {
             echo("<option selected=\"selected\" value=\"High\">High Privacy</option>
              <option value=\"Medium\">Medium Privacy</option>
              <option value=\"Low\">Low Privacy</option>");
         }
-       if($privacy = "Medium")
+       if($privacy == "Medium")
         {
             echo("<option value=\"High\">High Privacy</option>
              <option selected=\"selected\" value=\"Medium\">Medium Privacy</option>
              <option value=\"Low\">Low Privacy</option>");
         }
-       if($privacy = "Low")
+       if($privacy == "Low")
         {
             echo("<option  value=\"High\">High Privacy</option>
              <option value=\"Medium\">Medium Privacy</option>

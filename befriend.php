@@ -78,7 +78,7 @@ mysql_select_db("soullie7");
     $result = mysql_query($query) or die("Query failed: " . mysql_error());
     while ($row = mysql_fetch_assoc($result)) {
     //echo '<p>.$row['user']</p>';
-    echo '<p>User: '.$row['user'].'</p>';
+		echo '<div><a href=profile.php?user='.$row['user'].'>'.$row['user'].'</a></div>';
 }
 	echo "<h2>Incoming Friend Requests:</h2>";
 	$incoming_query = "select friend.sender from logintable, friend where logintable.user = '$user' and friend.recipient = '$user' and friend.is_accepted = 0";

@@ -32,6 +32,36 @@ if ($privacy == 'Low') {
 	echo '<div>Email: '.$email.'</div>';
 	echo '<div>Birth Year: '.$birthyear.'</div>';
 	echo '<div>interests: '.$interests.'</div>';
+} else if ($privacy == 'Medium') {
+	$user = $_SESSION['valid_user'];
+	$friend_query = "select * from friend where (friend.recipient = '$user' or friend.sender='$user') and friend.is_accepted = 1
+		and (friend.recipient = '$curr_user' or friend.sender = '$curr_user')";
+	$result = mysql_query($friend_query) or die("Query failed: " .mysql_error());
+	if($result != False and mysql_num_rows($result) > 0){
+		echo '<br>';
+		echo '<h2>'.$curr_user.'\'s profile</h2>';
+		echo '<div>Home City: '.$home_city.'</div>';
+		echo '<div>Home State: '.$home_state.'</div>';
+		echo '<div>Email: '.$email.'</div>';
+		echo '<div>Birth Year: '.$birthyear.'</div>';
+		echo '<div>interests: '.$interests.'</div>';
+	}
+} else if ($privacy == 'High') {
+	$user = $_SESSION['valid_user'];
+	$friend_query = "select * from friend where (friend.recipient = '$user' or friend.sender='$user') and friend.is_accepted = 1
+		and (friend.recipient = '$curr_user' or friend.sender = '$curr_user')";
+	$result = mysql_query($friend_query) or die("Query failed: " .mysql_error());
+	if($result != False and mysql_num_rows($result) > 0){
+		echo '<br>';
+		echo '<h2>'.$curr_user.'\'s profile</h2>';
+		echo '<div>Home City: '.$home_city.'</div>';
+		echo '<div>Home State: '.$home_state.'</div>';
+		echo '<div>Email: '.$email.'</div>';
+		echo '<div>Birth Year: '.$birthyear.'</div>';
+		echo '<div>interests: '.$interests.'</div>';
+	} else {
+		echo '<div>This user has set their profile to High privacy, you must be friends to view this profile</div>';
+	}
 }
 
        

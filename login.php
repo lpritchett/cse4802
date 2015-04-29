@@ -41,8 +41,7 @@ $_SESSION['valid_user'] = $userName;
 }
 }
 if(isset($_SESSION['valid_user'])){
-echo '<br><a href="befriend.php">Friend\'s Page</a>';
-echo '<br><a href="edit.php">Edit Profile</a>';
+	echo '<script> window.location ="befriend.php"</script>';
 } else {
 echo("<FORM name=\"loginForm\" method=\"POST\" action=\"login.php\">
 UserName: <INPUT type=\"text\" name=\"userName\"> <BR>
